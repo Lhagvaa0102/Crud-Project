@@ -1,39 +1,33 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { ButtonAddClothes } from "../button-add-clothes/ButtonAddClothes";
 import { ButtonEditClothes } from "../button-edit-clothes/ButtonEditClothes";
-import { List } from "../list/List";
 
 const HomePage = () => {
-  const BACKEND_ENDPOINT = "http://localhost:2222";
-
-  const handleOnSubmit = async (event) => {
-    event.preventDefault();
-
-    const clothesData = {
-      name: event.target.name.value,
-      list: event.target.list.value,
-      price: event.target.price.value,
-    };
-
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(clothesData),
-    };
-    const response = await fetch(BACKEND_ENDPOINT, options);
-    const data = await response.json();
-    console.log(data);
+  const [clothes, setClothes] = useState([""]);
+  const fetchData = () => {
+    fetch("http://localhost:2222/Clothes")
+      .then((Response) => Response.json())
+      .then((data) => setClothes(data));
   };
-
+  useEffect(() => fetchData(), []);
   return (
     <div className=" flex flex-col items-center justify-center ">
-      <div className=" border flex justify-center w-[1000px] h-[600px]"></div>
-      <List />
+      <div className=" border flex justify-center w-[1000px] h-[600px]">
+        {clothes?.clothes?.map((clothes) => {
+          return (
+            <div key={clothes.id}>
+              {clothes.name}
+              <p>{clothes.list}</p>
+              <p key={clothes.id}>{clothes.price}</p>
+            </div>
+          );
+        })}
+      </div>
+
       <div className="flex gap-4 mt-4">
-        <ButtonAddClothes handleOnsubmit={handleOnSubmit} />
+        <ButtonAddClothes />
         <ButtonEditClothes />
       </div>
     </div>

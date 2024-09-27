@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import fs from "fs";
@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post("/", (request, response) => {
+app.post("/AddClothes", (request, response) => {
   const { name, list, price } = request.body;
 
   fs.readFile("./data/clothes.json", "utf-8", (readError, data) => {
@@ -44,6 +44,22 @@ app.post("/", (request, response) => {
         });
       }
     });
+  });
+});
+app.get("/Clothes", (request, response) => {
+  fs.readFile("./data/clothes.json", "utf-8", (readError, data) => {
+    let clothes = JSON.parse(data);
+    if (readError) {
+      response.json({
+        status: false,
+        error: error,
+      });
+    } else {
+      response.json({
+        status: true,
+        clothes: clothes,
+      });
+    }
   });
 });
 app.listen(port, () => {
