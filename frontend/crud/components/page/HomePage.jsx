@@ -14,13 +14,19 @@ const HomePage = () => {
   useEffect(() => fetchData(), []);
   return (
     <div className=" flex flex-col items-center justify-center ">
-      <div className=" border flex justify-center w-[1000px] h-[600px]">
+      <div className=" border flex gap-3 flex-wrap relative h-[600px]">
         {clothes?.clothes?.map((clothes) => {
           return (
-            <div key={clothes.id}>
-              {clothes.name}
-              <p>{clothes.list}</p>
-              <p key={clothes.id}>{clothes.price}</p>
+            <div>
+              <div className="card bg-base-100 w-[364px] shadow-xl">
+                <div className="card-body">
+                  <h2 className="card-title">{clothes.name}</h2>
+                  <p>{clothes.list}</p>
+                  <div className="card-actions justify-start">
+                    <p>{clothes.price}</p>
+                  </div>
+                </div>
+              </div>
             </div>
           );
         })}

@@ -77,7 +77,7 @@ export const ButtonAddClothes = () => {
               </option>
               <option value="shirt">Цамц</option>
               <option value="pants">Өмд</option>
-              <option value="outerwear">Гадуур хувцас</option>
+              <option value="outwear">Гадуур хувцас</option>
               <option value="shoes">Гутал</option>
             </select>
           </div>
