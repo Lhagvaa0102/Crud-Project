@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export const ButtonAddClothes = () => {
+export const ButtonAddClothes = ({ onAdd }) => {
   const BACKEND_ENDPOINT = "http://localhost:2222/AddClothes";
 
   const [clothesData, setClothesData] = useState({
@@ -31,8 +31,16 @@ export const ButtonAddClothes = () => {
     };
 
     const response = await fetch(BACKEND_ENDPOINT, options);
-    const data = await response.json();
-    console.log(data);
+    document.getElementById("my_modal_3").close();
+    setClothesData({
+      name: "",
+      list: "",
+      price: "",
+    });
+
+    if (response.ok) {
+      onAdd();
+    }
   };
 
   return (
@@ -46,7 +54,6 @@ export const ButtonAddClothes = () => {
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box">
           <form method="dialog">
-            {" "}
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
               ✕
             </button>
@@ -86,7 +93,7 @@ export const ButtonAddClothes = () => {
             <input
               className="border rounded p-3 bg-[#F4F4F4] w-full h-[56px]"
               placeholder="Үнэ"
-              type="number"
+              type="text"
               name="price"
               value={clothesData.price}
               onChange={handleOnChange}
@@ -104,6 +111,9 @@ export const ButtonAddClothes = () => {
             </form>
           </div>
         </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
       </dialog>
     </div>
   );
