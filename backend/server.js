@@ -10,6 +10,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
+app.options("*", cors());
 
 app.post("/AddClothes", (request, response) => {
   const { name, list, price } = request.body;
