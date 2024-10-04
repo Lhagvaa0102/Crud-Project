@@ -8,10 +8,16 @@ const HomePage = () => {
   const [clothes, setClothes] = useState([]);
   const [selectedClothes, setSelectedClothes] = useState([]);
 
-  const fetchData = () => {
-    fetch("http://localhost:2222/Clothes")
-      .then((response) => response.json())
-      .then((data) => setClothes(data));
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "https://crud-project-65a1.onrender.com/Clothes"
+      );
+      const data = await response.json();
+      setClothes(data);
+    } catch (error) {
+      console.log("eerororo", error);
+    }
   };
 
   useEffect(() => {

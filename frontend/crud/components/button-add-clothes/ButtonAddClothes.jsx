@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 export const ButtonAddClothes = ({ onAdd }) => {
-  const BACKEND_ENDPOINT = "http://localhost:2222/AddClothes";
+  const BACKEND_ENDPOINT = "https://crud-project-65a1.onrender.com/AddClothes";
 
   const [clothesData, setClothesData] = useState({
     name: "",
@@ -29,17 +29,20 @@ export const ButtonAddClothes = ({ onAdd }) => {
       },
       body: JSON.stringify(clothesData),
     };
+    try {
+      const response = await fetch(BACKEND_ENDPOINT, options);
+      document.getElementById("my_modal_3").close();
+      setClothesData({
+        name: "",
+        list: "",
+        price: "",
+      });
 
-    const response = await fetch(BACKEND_ENDPOINT, options);
-    document.getElementById("my_modal_3").close();
-    setClothesData({
-      name: "",
-      list: "",
-      price: "",
-    });
-
-    if (response.ok) {
-      onAdd();
+      if (response.ok) {
+        onAdd();
+      }
+    } catch (error) {
+      console.log("error in create prod", error);
     }
   };
 
